@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>理解 Update、Enter、Exit</title>
+    <script src="static/d3.min.js"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="update-enter">
+        <h1>Update 和 Enter 的使用</h1>
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </div>
+    <div id="update-exit">
+        <h1>Update 和 Exit 的使用</h1>
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </div>
+</body>
+<script>
+
+    // Update 和 Enter 的使用
+    // update 部分的处理办法一般是：更新属性值
+    // enter 部分的处理办法一般是：添加元素后，赋予属性值
+    console.log('Update 和 Enter 的使用')
+
+    var dataset = [4, 5, 6, 7, 8]
+
+    // 选择 p 元素
+    var p = d3.select('#update-enter').selectAll('p');
+
+    // 获取 update 部分
+    var update = p.data(dataset)
+    console.log(update)
+
+    // 获取 enter 部分
+    var enter = update.enter();
+    console.log(enter)
+
+    // update 部分的处理 更新属性值
+    update.text(function (d) {
+        console.log(d)
+        return `update-${d}`
+    })
+
+    // enter 部分的处理， 添加元素后赋予属性值
+    enter.append('p').text(function (d) {
+        console.log(d)
+        return `enter-${d}`
+    })
+
+
+    // Update 和 Exit 的使用
+    // Exit 部分的处理办法一般是：删除元素
+    console.log('Update 和 Exit 的使用')
+
+    var dataset2 = [3]
+
+    // 选取元素 p
+    var p2 = d3.select('#update-exit').selectAll('p');
+
+    // 获取 update 部分
+    var update2 = p2.data(dataset2)
+    console.log(update2)
+
+    // 获取 exit 部分
+    var exit = update2.exit()
+    console.log(exit)
+
+    // update 部分的处理: 更新属性的值
+    update2.text(function (d) {
+        console.log(d)
+        return `update-${d}`
+    })
+
+    // // exit 部分的处理: 修改p元素的属性
+    exit.text(function (d, i) {
+        console.log(i)
+        return 'exit'
+    })
+
+    setTimeout(() => {
+        // exit部分的处理: 删除元素
+        exit.remove();
+    }, 1000)
+</script>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交互式操作</title>
+    <script src="static/d3.min.js"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     鼠标常用的事件有：
+     click：鼠标单击某元素时，相当于 mousedown 和 mouseup 组合在一起。
+     mouseover：光标放在某元素上。
+     mouseout：光标从某元素上移出来时。
+     mousemove：鼠标被移动的时候。
+     mousedown：鼠标按钮被按下。
+     mouseup：鼠标按钮被松开。
+     dblclick：鼠标双击。
+
+     键盘常用的事件有三个：
+     keydown：当用户按下任意键时触发，按住不放会重复触发此事件。该事件不会区分字母的大小写，例如“A”和“a”被视为一致。
+     keypress：当用户按下字符键（大小写字母、数字、加号、等号、回车等）时触发，按住不放会重复触发此事件。该事件区分字母的大小写。
+     keyup：当用户释放键时触发，不区分字母的大小写。 触屏常用的事件有三个：
+     touchstart：当触摸点被放在触摸屏上时。
+     touchmove：当触摸点在触摸屏上移动时。
+     touchend：当触摸点从触摸屏上拿开时。
+     */
+    var width = window.document.documentElement.clientWidth
+    var height = window.document.documentElement.clientHeight
+    console.log(width)
+    console.log(height)
+
+    var svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+    var initR = 50;
+    var initColor = 'steelblue'
+    var moveWay = ['bounce', 'linear', 'elastic', 'bounce']
+    var circle = svg.append("circle")
+        .attr('cx', width / 2)
+        .attr('cy', height / 2)
+        .attr('r', initR)
+        .attr('fill', initColor);
+
+    // 绑定事件
+    circle.on("mouseover", function (d, i) {
+
+        // 打印事件信息
+        console.log(d3.event)
+
+        const _this = d3.select(this);
+        let currentR = _this.attr('r')
+        let current2R = 2 * currentR
+        let width = window.document.documentElement.clientWidth - current2R
+        let height = window.document.documentElement.clientHeight - current2R
+        let cx = randomNum(1, width)
+        let cy = randomNum(1, height)
+
+        console.log(`(${cx}, ${cy})`)
+
+        randomNum(current2R,)
+        _this.transition()
+            .duration(300)
+            .attr("cx", cx)
+            .attr("cy", cy)
+            .attr("fill", "#1e1e1e3")
+            .attr('r', 5)
+    })
+
+    circle.on('mouseout', function (d, i) {
+        // 打印事件信息
+        console.log(d3.event)
+
+        const _this = d3.select(this);
+        _this.transition()
+            .duration(300)
+            .attr('fill', initColor)
+            .attr('r', initR);
+    });
+
+
+    /**
+     * 随机获取数组指定个数的元素
+     * @param arr
+     * @param count
+     * @returns {number}
+     */
+    function getRandomArrayElements(arr, count) {
+        var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+        while (i-- > min) {
+            index = Math.floor((i + 1) * Math.random());
+            temp = shuffled[index];
+            shuffled[index] = shuffled[i];
+            shuffled[i] = temp;
+        }
+        return shuffled.slice(min);
+    }
+
+    /**
+     * 生成范围随机数
+     * @param minNum
+     * @param maxNum
+     * @returns {number}
+     */
+    function randomNum(minNum, maxNum) {
+        switch (arguments.length) {
+            case 1:
+                return parseInt(Math.random() * minNum + 1, 10);
+            case 2:
+                return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+            default:
+                return 0;
+        }
+    }
+</script>
+</html>

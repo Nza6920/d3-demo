@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本操作</title>
+    <script src="static/d3.min.js"></script>
+</head>
+<body>
+<p>Apple</p>
+<p id="second">Pear</p>
+<p>Banana</p>
+<p class="myclass">Orange</p>
+<p class="myclass">Watermelon</p>
+<script>
+    // https://www.d3js.org.cn/
+    //选择<body>中所有的<p>，选择集保存在变量 p 中
+    let p = d3.select("body").selectAll("p");
+
+    //修改段落的颜色和字体大小
+    // p.style("color", "red")
+    //     .style("font-size", "72px");
+
+    // 绑定数据
+    // const str = "China";
+    // p.datum(str).text(function (d, i) {
+    //     return '第' + i + '个元素绑定的数据是' + d;
+    // })
+    // let dataset = ["I like dog", "I like cat", "I like snake"];
+    // p.data(dataset).text(function (d, i) {
+    //     return d;
+    // })
+    // p.style("color", "red")
+    //     .style("font-size", "72px");
+
+    // 选择元素
+    let body = d3.select('body')
+    let p1 = body.select('p')
+    p1.style('color', 'red')
+
+    let p2 = body.select('#second')
+    p2.style('color', 'blue')
+    var p3 = body.selectAll('.myclass');
+    p3.style('color', 'purple')
+
+    // 插入元素
+    body.append('p')
+    .text('Mango')
+
+    body.insert('p', '#second')
+    .text('Peach')
+
+    // 删除元素
+    setTimeout(() => {
+        let interval = setInterval(() => {
+            let rp = body.select('p');
+            console.log(rp[0][0])
+            if (rp[0][0]) {
+                rp.remove();
+            } else {
+                if (interval) {
+                    console.log('无元素')
+                    clearInterval(interval)
+                    interval = null
+                }
+            }
+        }, 1000);
+    }, 3000)
+</script>
+</body>
+</html>
