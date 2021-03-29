@@ -43,7 +43,6 @@
 
     var initR = 50;
     var initColor = 'steelblue'
-    var moveWay = ['bounce', 'linear', 'elastic', 'bounce']
     var circle = svg.append("circle")
         .attr('cx', width / 2)
         .attr('cy', height / 2)
@@ -66,7 +65,6 @@
 
         console.log(`(${cx}, ${cy})`)
 
-        randomNum(current2R,)
         _this.transition()
             .duration(300)
             .attr("cx", cx)
@@ -85,24 +83,6 @@
             .attr('fill', initColor)
             .attr('r', initR);
     });
-
-
-    /**
-     * 随机获取数组指定个数的元素
-     * @param arr
-     * @param count
-     * @returns {number}
-     */
-    function getRandomArrayElements(arr, count) {
-        var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
-        while (i-- > min) {
-            index = Math.floor((i + 1) * Math.random());
-            temp = shuffled[index];
-            shuffled[index] = shuffled[i];
-            shuffled[i] = temp;
-        }
-        return shuffled.slice(min);
-    }
 
     /**
      * 生成范围随机数
